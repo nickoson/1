@@ -13,11 +13,21 @@ public:
 	~Myclass() {x=0;}
 	Myclass(int a) {x=a;y=new int(a);}
 	Myclass(int a, int b) {x=a+b;y=new int(b);}
-	Myclass(const Myclass& T) {cout<<"UPS"<<endl; this->x=T.x;}
+	Myclass(const Myclass& T) {cout<<"UPS"<<endl; /*this->x=T.x;*/}
 	int getY() {return *y;}
-	// Myclass& operator= (const Myclass &ob);
+	Myclass& operator= (const Myclass &ob);
+	friend std::ostream& operator<<(ostream& out, const Myclass &s);
 };
-/*
+
+
+
+
+ 
+ostream& operator<<(std::ostream& out, const Myclass &s)
+{
+    out << s.x << " " << *s.y << endl;;
+    return out;
+}
 
 Myclass& Myclass::operator= (const Myclass &ob)
 {
@@ -27,12 +37,12 @@ Myclass& Myclass::operator= (const Myclass &ob)
  
     // Выполняем копирование значений
     x=ob.x;
-	y=ob.y;
+	*y= *(ob.y);
 	
     // Возвращаем текущий объект
     return *this;
 }
-*/
+
 
 class Monster
 {
@@ -64,10 +74,15 @@ int main ()
 {
    Myclass obj1(1);
    Myclass obj2(2);
-   obj1=obj2;
-   cout << obj1.getX() << endl;
-   cout << obj1.getY() << endl;
+  
+	cout<<obj1;
+	cout<<obj2;
 
+   obj1=obj2;
+  
+	cout<<obj1;
+	cout<<obj2;
+	
   system("pause");
   return 0;
   
